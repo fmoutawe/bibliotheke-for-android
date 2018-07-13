@@ -86,4 +86,10 @@ public class SimpleScannerActivity extends AppCompatActivity implements ZXingSca
         }
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mScannerView.stopCamera();
+    }
 }
