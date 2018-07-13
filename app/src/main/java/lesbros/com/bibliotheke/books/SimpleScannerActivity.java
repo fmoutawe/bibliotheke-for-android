@@ -1,4 +1,4 @@
-package lesbros.com.bibliotheke;
+package lesbros.com.bibliotheke.books;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,6 +15,7 @@ import com.google.zxing.Result;
 import java.util.ArrayList;
 import java.util.List;
 
+import lesbros.com.bibliotheke.R;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 public class SimpleScannerActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler {
