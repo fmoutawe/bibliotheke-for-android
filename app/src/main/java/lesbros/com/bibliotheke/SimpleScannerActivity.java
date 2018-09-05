@@ -1,10 +1,13 @@
-package lesbros.com.bibliotheke.books;
+package lesbros.com.bibliotheke;
 
+import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -15,11 +18,14 @@ import com.google.zxing.Result;
 import java.util.ArrayList;
 import java.util.List;
 
-import lesbros.com.bibliotheke.R;
+import lesbros.com.bibliotheke.dao.BookDao;
+import lesbros.com.bibliotheke.entity.Book;
+import lesbros.com.bibliotheke.viewmodel.BookViewModel;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 public class SimpleScannerActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler {
     private ZXingScannerView mScannerView;
+    private BookViewModel mBookViewModel;
 
     @Override
     public void onCreate(Bundle state) {
@@ -30,6 +36,8 @@ public class SimpleScannerActivity extends AppCompatActivity implements ZXingSca
         ViewGroup contentFrame = (ViewGroup) findViewById(R.id.content_frame);
         mScannerView = new ZXingScannerView(this);
         contentFrame.addView(mScannerView);
+
+        mBookViewModel = ViewModelProviders.of(this).get(BookViewModel.class);;
     }
 
     @Override
@@ -51,8 +59,13 @@ public class SimpleScannerActivity extends AppCompatActivity implements ZXingSca
 
     @Override
     public void handleResult(Result rawResult) {
-        Toast.makeText(this, "Contents = " + rawResult.getText() +
-                ", Format = " + rawResult.getBarcodeFormat().toString(), Toast.LENGTH_SHORT).show();
+        String format = rawResult.getBarcodeFormat().toString();
+        String code = rawResult.getText();
+
+        if (!TextUtils.isEmpty(code)) {
+            mBookViewModel.insert(new Book(code));
+            Toast.makeText(this, R.string.book_record, Toast.LENGTH_SHORT).show();
+        }
 
         // Note:
         // * Wait 2 seconds to resume the preview.
@@ -64,7 +77,7 @@ public class SimpleScannerActivity extends AppCompatActivity implements ZXingSca
             public void run() {
                 mScannerView.resumeCameraPreview(SimpleScannerActivity.this);
             }
-        }, 2000);
+        }, 500);
     }
 
     public void setupToolbar() {
