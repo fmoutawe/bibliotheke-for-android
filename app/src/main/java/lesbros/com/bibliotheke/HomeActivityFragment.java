@@ -62,26 +62,6 @@ public class HomeActivityFragment extends Fragment {
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mRecyclerView.getContext(),
                 LinearLayoutManager.VERTICAL);
         mRecyclerView.addItemDecoration(dividerItemDecoration);
-//
-//        List<String> booksList = new ArrayList<>();
-//        for (int i = 0; i < 3000; i++) {
-//            booksList.add(i + ": Arbitre");
-//            booksList.add(i + ": Breton");
-//            booksList.add(i + ": Carousel");
-//            booksList.add(i + ": Detroit");
-//            booksList.add(i + ": Envie");
-//            booksList.add(i + ": Feu");
-//            booksList.add(i + ": Grotte");
-//            booksList.add(i + ": Humour");
-//            booksList.add(i + ": Invisible");
-//            booksList.add(i + ": Jamais");
-//            booksList.add(i + ": Koala");
-//            booksList.add(i + ": Loutre");
-//            booksList.add(i + ": Maman");
-//        }
-//
-//        mAdapter = new BooksListAdapter(booksList);
-//        mRecyclerView.setAdapter(mAdapter);
 
         return view;
     }
